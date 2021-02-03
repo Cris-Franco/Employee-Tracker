@@ -434,3 +434,33 @@ function viewAll() {
             initTracker();
         });
 }
+
+function displayAllEmployees() {
+    let query = "SELECT * FROM employee ";
+    connection.query(query, (err, res) => {
+        if (err) throw err;
+
+        console.log("\n\n ** Full Employee list ** \n");
+        console.table(res);
+    });
+}
+
+function displayAllRoles() {
+    let query = "SELECT * FROM roles ";
+    connection.query(query, (err, res) => {
+        if (err) throw err;
+
+        console.log("\n\n ** Full Role list ** \n");
+        console.table(res);
+    });
+}
+
+function displayAllDepartments() {
+    let query = "SELECT * FROM department ";
+    connection.query(query, (err, res) => {
+        if (err) throw err;
+
+        console.log("\n\n ** Full Department list ** \n");
+        console.table(res);
+    });
+}
