@@ -140,3 +140,24 @@ function deleteDepartment() {
 
                 }
             );
+            connection.query(
+                "UPDATE roles SET ? WHERE ?",
+                [
+                    {
+                        department_id: "0",
+                    },
+                    {
+                        department_id: answer.departmentId,
+                    },
+                ],
+                function (err, res) {
+                    if (err) throw err;
+                    console.log(
+                        "Roles that were assigned to this department have been updated to '0' which signifies that they are now unassigned to a department.\n"
+                    );
+                }
+            );
+
+            initTracker();
+        });
+}
