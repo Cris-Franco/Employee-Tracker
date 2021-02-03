@@ -464,3 +464,7 @@ function displayAllDepartments() {
         console.table(res);
     });
 }
+
+app.listen(PORT, function () {
+    console.log("Server listening on: http://localhost:" + PORT);
+});
