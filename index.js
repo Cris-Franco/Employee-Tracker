@@ -114,3 +114,29 @@ function initTracker() {
             }
         });
 }
+
+function deleteDepartment() {
+
+    displayAllDepartments();
+
+    inquirer
+        .prompt({
+            name: "departmentId",
+            type: "input",
+            message: "Enter the ID of the department you want to delete",
+        })
+        .then((answer) => {
+            console.log("Deleting department...\n");
+
+            //Delete Department
+            connection.query(
+                "DELETE FROM department WHERE ?",
+                {
+                    id: answer.departmentId,
+                },
+                function (err, res) {
+                    if (err) throw err;
+                    console.log("Department deleted!\n");
+
+                }
+            );
