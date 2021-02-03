@@ -186,3 +186,25 @@ function deleteRole() {
                     console.log("Department deleted!\n");
                 }
             );
+
+            connection.query(
+                "UPDATE employee SET ? WHERE ?",
+                [
+                    {
+                        role_id: "0",
+                    },
+                    {
+                        role_id: answer.roleId,
+                    },
+                ],
+                function (err, res) {
+                    if (err) throw err;
+                    console.log(
+                        "Employees that were assigned to this role have been updated to '0' which signifies that they are now unassigned to a role.\n"
+                    );
+                }
+            );
+
+            initTracker();
+        });
+}
