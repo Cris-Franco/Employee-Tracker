@@ -281,3 +281,27 @@ function updateRole() {
                 });
         });
 }
+
+function addDepartment() {
+    inquirer
+        .prompt({
+            name: "department_name",
+            type: "input",
+            message: "What is the department name?",
+        })
+        .then((answer) => {
+            console.log("Adding a new department...\n");
+            connection.query(
+                `INSERT INTO department SET ?`,
+                {
+                    department_name: answer.department_name,
+                },
+                function (err, res) {
+                    if (err) throw err;
+                    console.log("New department added!\n");
+
+                    initTracker();
+                }
+            );
+        });
+}
