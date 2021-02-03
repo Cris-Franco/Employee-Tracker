@@ -208,3 +208,30 @@ function deleteRole() {
             initTracker();
         });
 }
+
+function deleteEmployee() {
+
+    displayAllEmployees();
+
+    inquirer
+        .prompt({
+            name: "employeeId",
+            type: "input",
+            message: "Enter the ID of the employee you want to delete",
+        })
+        .then((answer) => {
+            console.log("Deleting employee...\n");
+            connection.query(
+                "DELETE FROM employee WHERE ?",
+                {
+                    id: answer.employeeId,
+                },
+                function (err, res) {
+                    if (err) throw err;
+                    console.log("Employee deleted!\n");
+                }
+            );
+
+            initTracker();
+        });
+}
