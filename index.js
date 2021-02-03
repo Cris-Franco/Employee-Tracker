@@ -17,3 +17,100 @@ const connection = mysql.createConnection({
     database: "employees_db",
 });
 
+connection.connect(function (err) {
+    if (err) {
+        console.error("error connecting: " + err.stack);
+        return;
+    }
+
+    console.log("connected as id " + connection.threadId);
+
+    initTracker();
+});
+
+function initTracker() {
+    inquirer
+        .prompt({
+            name: "action",
+            type: "list",
+            message: "Welcome to the employee tracker management system. What would you like to do?",
+            choices: [
+                {
+                    name: "ADD a department",
+                    value: "addDepartment",
+                },
+                {
+                    name: "ADD a role",
+                    value: "addRole",
+                },
+                {
+                    name: "ADD an employee",
+                    value: "addEmployee",
+                },
+                {
+                    name: "VIEW all departments, roles, or employees",
+                    value: "view",
+                },
+                {
+                    name: "UPDATE employee roles",
+                    value: "update",
+                },
+                {
+                    name: "DELETE a department",
+                    value: "deleteDepartment",
+                },
+                {
+                    name: "DELETE a role",
+                    value: "deleteRole",
+                },
+                {
+                    name: "DELETE an employee",
+                    value: "deleteEmployee",
+                },
+                new inquirer.Separator(),
+                {
+                    name: "Exit Employee Tracker",
+                    value: "exit",
+                },
+            ]
+        })
+        .then(function (answer) {
+            switch (answer.action) {
+                case "view":
+                    viewAll();
+                    break;
+
+                case "addDepartment":
+                    addDepartment();
+                    break;
+
+                case "addRole":
+                    addRole();
+                    break;
+
+                case "addEmployee":
+                    addEmployee();
+                    break;
+
+                case "update":
+                    updateRole();
+                    break;
+
+                case "deleteDepartment":
+                    deleteDepartment();
+                    break;
+
+                case "deleteRole":
+                    deleteRole();
+                    break;
+
+                case "deleteEmployee":
+                    deleteEmployee();
+                    break;
+
+                case "exit":
+                    connection.end();
+                    break;
+            }
+        });
+}
