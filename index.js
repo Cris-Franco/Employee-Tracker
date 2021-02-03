@@ -235,3 +235,49 @@ function deleteEmployee() {
             initTracker();
         });
 }
+
+function updateRole() {
+    let employeeId;
+
+    displayAllEmployees();
+
+    inquirer
+        .prompt({
+            name: "employeeId",
+            type: "input",
+            message: "Enter the ID of the employee you want to update",
+        })
+        .then((answer) => {
+            employeeId = answer.employeeId;
+
+            displayAllRoles();
+
+            inquirer
+                .prompt({
+                    name: "roleId",
+                    type: "input",
+                    message: "Enter the role ID you want the user to have",
+                })
+                .then((answer) => {
+                    console.log("Updating employee role...\n");
+
+                    connection.query(
+                        "UPDATE employee SET ? WHERE ?",
+                        [
+                            {
+                                role_id: answer.roleId,
+                            },
+                            {
+                                id: employeeId,
+                            },
+                        ],
+                        function (err, res) {
+                            if (err) throw err;
+                            console.log("Employee role updated!\n");
+
+                            initTracker();
+                        }
+                    );
+                });
+        });
+}
