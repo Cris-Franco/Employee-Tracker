@@ -391,3 +391,46 @@ function addEmployee() {
             );
         });
 }
+
+function viewAll() {
+    inquirer
+        .prompt({
+            name: "table",
+            type: "list",
+            message:
+                "Would you like to view all departments, roles, or employees?",
+            choices: [
+                {
+                    name: "Departments",
+                    value: "department",
+                },
+                {
+                    name: "Roles",
+                    value: "roles",
+                },
+                {
+                    name: "Employees",
+                    value: "employee",
+                },
+            ],
+        })
+        .then(function (answer) {
+            console.log(`Selecting all from ${answer.table}...`);
+
+            switch (answer.table) {
+                case "department":
+                    displayAllDepartments();
+                    break;
+
+                case "roles":
+                    displayAllRoles();
+                    break;
+
+                case "employee":
+                    displayAllEmployees();
+                    break;
+            }
+
+            initTracker();
+        });
+}
