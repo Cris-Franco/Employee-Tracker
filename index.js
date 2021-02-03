@@ -347,3 +347,47 @@ function addRole() {
             );
         });
 }
+
+function addEmployee() {
+    inquirer
+        .prompt([
+            {
+                name: "firstName",
+                type: "input",
+                message: "What is the employee's first name?",
+            },
+            {
+                name: "lastName",
+                type: "input",
+                message: "What is the employee's last name?",
+            },
+            {
+                name: "roleId",
+                type: "input",
+                message: "What is this employee's role ID?",
+            },
+            {
+                name: "managerId",
+                type: "input",
+                message: "What is this employee's manager ID?",
+            },
+        ])
+        .then((answer) => {
+            console.log("Adding a new employee...\n");
+            connection.query(
+                `INSERT INTO employee SET ?`,
+                {
+                    first_name: answer.firstName,
+                    last_name: answer.lastName,
+                    role_id: answer.roleId,
+                    manager_id: answer.managerId,
+                },
+                function (err, res) {
+                    if (err) throw err;
+                    console.log("New role added!\n");
+
+                    initTracker();
+                }
+            );
+        });
+}
