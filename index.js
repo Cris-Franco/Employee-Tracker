@@ -161,3 +161,28 @@ function deleteDepartment() {
             initTracker();
         });
 }
+
+function deleteRole() {
+
+    displayAllRoles();
+
+    inquirer
+        .prompt({
+            name: "roleId",
+            type: "input",
+            message: "Enter the ID of the role you want to delete",
+        })
+        .then((answer) => {
+            console.log("Deleting role...\n");
+
+            // Deletes Role
+            connection.query(
+                "DELETE FROM roles WHERE ?",
+                {
+                    id: answer.roleId,
+                },
+                function (err, res) {
+                    if (err) throw err;
+                    console.log("Department deleted!\n");
+                }
+            );
